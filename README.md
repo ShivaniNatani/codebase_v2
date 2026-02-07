@@ -1,4 +1,4 @@
-# 💝 The Legend of Argha
+# 💝 The Legend
 ### A Valentine's Day Game - A Hero's Journey Through Life
 
 ![Made with Love](https://img.shields.io/badge/Made%20with-❤️-red)
