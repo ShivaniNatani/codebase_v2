@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Legend of Argha | Valentine's Week 2026</title>
+    <meta name="description" content="A special journey through seven chapters of his life">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Game Container -->
+    <div id="game-container">
+        <!-- Main Canvas -->
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- UI Overlay -->
+        <div id="ui-overlay">
+            <!-- Title Screen -->
+            <div id="title-screen" class="screen active">
+                <div class="title-content">
+                    <h1 class="pixel-title">THE LEGEND OF</h1>
+                    <h2 class="pixel-title-main">ARGHA</h2>
+                    <p class="subtitle">A Hero's Journey Through Life</p>
+
+                    <div class="menu-buttons">
+                        <button class="pixel-btn" id="start-btn">START GAME</button>
+                        <button class="pixel-btn" id="continue-btn" style="display:none;">CONTINUE</button>
+                        <button class="pixel-btn" id="levels-btn">SELECT LEVEL</button>
+                        <button class="pixel-btn" id="unlock-btn" style="background: #f39c12; border-color: #f39c12;">🔓
+                            UNLOCK ALL</button>
+                    </div>
+
+                    <div class="controls-hint">
+                        <p>← → MOVE | SPACE JUMP | P PAUSE</p>
+                    </div>
+                </div>
+
+                <div class="dedication">
+                    <p>Made with ❤️ for Valentine's Week 2026</p>
+                </div>
+            </div>
+
+            <!-- Level Select Screen -->
+            <div id="level-select-screen" class="screen">
+                <div class="screen-content">
+                    <h2 class="pixel-title">SELECT CHAPTER</h2>
+                    <button class="back-btn pixel-btn-small" id="back-to-menu">← BACK</button>
+
+                    <div class="levels-grid" id="levels-grid">
+                        <!-- Levels will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game HUD -->
+            <div id="game-hud" class="hidden">
+                <div class="hud-top">
+                    <div class="hud-item">
+                        <span class="hud-label">CHAPTER:</span>
+                        <span class="hud-value" id="level-name">1</span>
+                    </div>
+                    <div class="hud-item">
+                        <span class="hud-label">❤️</span>
+                        <span class="hud-value" id="health">3</span>
+                    </div>
+                    <div class="hud-item">
+                        <span class="hud-label">📦</span>
+                        <span class="hud-value" id="collectibles">0/10</span>
+                    </div>
+                </div>
+                <div class="hud-bottom">
+                    <div class="story-text" id="story-text"></div>
+                </div>
+            </div>
+
+            <!-- Pause Screen -->
+            <div id="pause-screen" class="screen">
+                <div class="pause-content">
+                    <h2 class="pixel-title">PAUSED</h2>
+                    <div class="menu-buttons">
+                        <button class="pixel-btn" id="resume-btn">RESUME</button>
+                        <button class="pixel-btn" id="restart-level-btn">RESTART LEVEL</button>
+                        <button class="pixel-btn" id="quit-btn">QUIT TO MENU</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Victory Screen -->
+            <div id="victory-screen" class="screen">
+                <div class="victory-content">
+                    <h2 class="pixel-title">CHAPTER COMPLETE!</h2>
+                    <div class="victory-stats" id="victory-stats"></div>
+                    <div class="victory-message" id="victory-message"></div>
+                    <div class="menu-buttons">
+                        <button class="pixel-btn" id="next-level-btn">NEXT CHAPTER →</button>
+                        <button class="pixel-btn" id="back-to-levels-btn">LEVEL SELECT</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Over Screen -->
+            <div id="gameover-screen" class="screen">
+                <div class="gameover-content">
+                    <h2 class="pixel-title">TRY AGAIN</h2>
+                    <p class="gameover-text">Every hero falls sometimes...</p>
+                    <div class="menu-buttons">
+                        <button class="pixel-btn" id="retry-btn">RETRY</button>
+                        <button class="pixel-btn" id="gameover-menu-btn">MAIN MENU</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Valentine's Day Final Screen -->
+            <div id="finale-screen" class="screen">
+                <div class="finale-content">
+                    <h2 class="pixel-title">❤️ YOU DID IT ❤️</h2>
+                    <div class="finale-message" id="finale-message"></div>
+                    <div class="menu-buttons">
+                        <button class="pixel-btn" id="finale-menu-btn">MAIN MENU</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Story Screen -->
+            <div id="story-screen" class="screen">
+                <div class="story-content">
+                    <h2 class="pixel-title" id="story-chapter">CHAPTER 1</h2>
+                    <div class="story-text-large" id="story-text"></div>
+                    <p class="story-hint">Press SPACE, ENTER, or ESC to skip</p>
+                </div>
+            </div>
+
+            <!-- Loading Screen -->
+            <div id="loading-screen" class="screen">
+                <div class="loading-content">
+                    <h2 class="pixel-title">LOADING...</h2>
+                    <div class="loading-bar">
+                        <div class="loading-fill" id="loading-fill"></div>
+                    </div>
+                    <p id="loading-text">Preparing Chapter 1...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Elements (optional) -->
+    <audio id="bgm" loop></audio>
+    <audio id="sfx-jump"></audio>
+    <audio id="sfx-collect"></audio>
+    <audio id="sfx-hit"></audio>
+    <audio id="sfx-victory"></audio>
+
+    <!-- Game Scripts -->
+    <script src="game.js"></script>
+
+</body>
+
+</html>
